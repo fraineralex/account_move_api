@@ -1,43 +1,48 @@
 # Account Move API
+This module provides an API for creating accounting entries in the account.move model through HTTP requests.
 
-## Example Data
+### Example Request
+```css
+  PATCH /api/v1/move/account.move/call/create_move
+```
 
-partner_id = 'Azure Interior'
-currency_id = 'DOP'
-company_id = 'YourCompany'
-journal_id = 'Facturas de cliente'
-TEMPLATE = [
+### Headers:
+```css
+  Authorization: Basic base64(username:password)
+  Content-Type: application/json
+```
+
+### Body:
+```json
   {
-    "name": "API/2023/0001",
-    "ref": "Asiento desde postman",
-    "move_type": "entry",
-    "posted_before": False,
-    "journal_id": journal_id,
-    "company_id": company_id,
-    "currency_id": currency_id,
-    "partner_id": partner_id,
-    "payment_state": "not_paid",
-    "invoice_date": "2023-06-27",
-    "invoice_date_due": "2023-06-29",
-    "invoice_line_ids": [
+    "args": [
       [
-        0,
-        False,
         {
-          "sequence": 100,
-          "product_id": False,
-          "name": False,
-          "quantity": 1,
-          "price_unit": 147,
-          "discount": 0,
-          "tax_ids": [
-            [6, False, [3]]
-          ],
-          "partner_id": partner_id,
-          "currency_id": currency_id,
-          "product_uom_id": False
+          "date": "2023-06-28",
+          "ref": "API",
+          "journal_id": "Operaciones varias",
+          "currency_id": "DOP",
+          "line_ids": [
+            [
+              0,
+              "virtual_843",
+              {
+                "account_id": "Cuenta de prueba",
+                "partner_id": "Azure Interior",
+                "currency_id": "DOP",
+                "amount_currency": 0.0,
+                "debit": 0.0,
+                "credit": 0.0,
+                "quantity": 1
+              }
+            ]
+          ]
         }
       ]
     ]
   }
-]
+```
+### Prerequisites
+- Install the Open API module in your Odoo instance.
+- Enable the account.move module.
+- Add your user to the allowed users.
