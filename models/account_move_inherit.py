@@ -14,9 +14,12 @@ class AccountMove(models.Model):
             move_lines = vals.get('invoice_line_ids', [])
             for line in move_lines:
                 line_dict = line[2]
-                # line['product_id'] = self.env['product.product'].search([('name', '=', line['product_id'])]).id
                 line_dict['partner_id'] = self.env['res.partner'].search([('name', '=', line_dict['partner_id'])], limit=1).id
                 line_dict['currency_id'] = self.env['res.currency'].search([('name', '=', line_dict['currency_id'])], limit=1).id
+                if line_dict['product_id']:
+                    line_dict['name'] = line_dict['product_id']
+                    line_dict['product_id'] = self.env['product.product'].search([('name', '=', line_dict['product_id'])]).id
+                    line_dict['product_uom_id'] = self.env['uom.uom'].search([('name', '=', line_dict['product_uom_id'])]).id
 
                 tax_lines = line_dict.get('tax_ids', [])
                 for index, tax in enumerate(tax_lines[0][2]):
