@@ -2,12 +2,12 @@
 This module provides an API for creating accounting entries in the account.move model through HTTP requests.
 
 ### Example Request
-```css
+```bash
   PATCH /api/v1/move/account.move/call/create_move
 ```
 
 ### Headers:
-```css
+```bash
   Authorization: Basic base64(username:password)
   Content-Type: application/json
 ```
