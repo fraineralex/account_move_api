@@ -16,6 +16,7 @@ class AccountMove(models.Model):
         for vals in vals_list:
             vals['journal_id'] = self.env['account.journal'].search([('name', '=', vals['journal_id'])], limit=1).id
             vals['currency_id'] = self.env['res.currency'].search([('name', '=', vals['currency_id'])], limit=1).id
+            vals['company_id'] = self.env['res.company'].search([('name', '=', vals['company_id'])], limit=1).id
           
             line_ids = vals.get('line_ids', [])
             for line in line_ids:
