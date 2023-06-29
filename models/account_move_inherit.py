@@ -1,7 +1,15 @@
 from odoo import models, api
+import os
 
 class AccountMove(models.Model):
     _inherit = 'account.move'
+
+    @api.model
+    def create(self, vals_list):
+        file_path = os.path.join(os.path.dirname(__file__), 'vals_list.txt')
+        with open(file_path, 'w') as file:
+            file.write(str(vals_list))
+        return super(AccountMove, self).create(vals_list)
 
     @api.model
     def create_move(self, vals_list):
