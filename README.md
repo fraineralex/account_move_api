@@ -13,6 +13,7 @@ This module provides an API for creating accounting entries in the account.move 
 ```
 
 ### Body:
+##### raw > json
 ```json
   {
     "args": [
