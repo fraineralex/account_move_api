@@ -19,17 +19,18 @@ This module provides an API for creating accounting entries in the account.move 
     "args": [
       [
         {
-          "date": "2023-06-28",
-          "ref": "API",
-          "journal_id": "Operaciones varias",
+          "date": "2023-08-24",
+          "ref": "Asiento desde postman",
+          "journal_id": "Facturas de cliente",
           "currency_id": "DOP",
+          "company_id": "RIBO (Venezuela)",
           "line_ids": [
             [
               0,
               "virtual_843",
               {
-                "account_id": "Cuenta de prueba",
-                "partner_id": "Azure Interior",
+                "account_id": "CUENTA DE PRUEBA RIBO VENEZUELA",
+                "partner_id": "Frainer Encarnacion",
                 "currency_id": "DOP",
                 "amount_currency": 0.0,
                 "debit": 0.0,
