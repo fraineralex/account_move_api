@@ -1,6 +1,5 @@
 from odoo import models, api
 
-
 class AccountMove(models.Model):
     _inherit = 'account.move'
 
@@ -9,14 +8,20 @@ class AccountMove(models.Model):
         """
         Create accounting moves based on provided values and perform validations.
         """
+        error_messages = self.move_validations(vals_list)
+        if error_messages:
+            return {'error': error_messages}
+
         for vals in vals_list:
             company = self.env['res.company'].search(
                 [('name', '=', vals['company_id'])], limit=1)
             if company:
                 vals['company_id'] = company.id
+            else:
+                return {'error': "Company not found"}
 
             journal = self.env['account.journal'].search(
-                [('name', '=', vals['journal_id']), ('company_id', '=', vals.get('company_id'))], limit=1)
+                [('name', '=', vals['journal_id']), ('company_id', '=', company.id)], limit=1)
             if journal:
                 vals['journal_id'] = journal.id
 
@@ -39,15 +44,11 @@ class AccountMove(models.Model):
                     line_dict['currency_id'] = currency.id
 
                 account = self.env['account.account'].search(
-                    [('name', '=', line_dict['account_id']), ('company_id', '=', vals.get('company_id'))], limit=1)
+                    [('name', '=', line_dict['account_id']), ('company_id', '=', company.id)], limit=1)
                 if account:
                     line_dict['account_id'] = account.id
 
             vals['line_ids'] = line_ids
-
-        error_messages = self.move_validations(vals_list)
-        if error_messages:
-            return {'error': error_messages}
 
         created_moves = super(AccountMove, self).create(vals_list)
 
