@@ -24,11 +24,15 @@ class AccountMove(models.Model):
                 [('name', '=', vals['journal_id']), ('company_id', '=', company.id)], limit=1)
             if journal:
                 vals['journal_id'] = journal.id
+            else:
+                return {'error': "Journal not found"}
 
             currency = self.env['res.currency'].search(
                 [('name', '=', vals['currency_id'])], limit=1)
             if currency:
                 vals['currency_id'] = currency.id
+            else:
+                return {'error': "Currency not found"}
 
             line_ids = vals.get('line_ids', [])
             for line in line_ids:
@@ -37,16 +41,22 @@ class AccountMove(models.Model):
                     [('name', '=', line_dict['partner_id'])], limit=1)
                 if partner:
                     line_dict['partner_id'] = partner.id
+                else:
+                    return {'error': "Partner not found"}
 
-                currency = self.env['res.currency'].search(
+                line_currency = self.env['res.currency'].search(
                     [('name', '=', line_dict['currency_id'])], limit=1)
-                if currency:
-                    line_dict['currency_id'] = currency.id
+                if line_currency:
+                    line_dict['currency_id'] = line_currency.id
+                else: # if currency not found, set it to company currency
+                    line_dict['currency_id'] = company.currency_id.id                                           
 
                 account = self.env['account.account'].search(
                     [('name', '=', line_dict['account_id']), ('company_id', '=', company.id)], limit=1)
                 if account:
                     line_dict['account_id'] = account.id
+                else:
+                    return {'error': "Account not found"}
 
             vals['line_ids'] = line_ids
 
@@ -80,10 +90,11 @@ class AccountMove(models.Model):
                     if not line[2].get('account_id'):
                         error_messages.append(
                             "Invalid field 'account_id' in the move line")
-                    if not line[2].get('debit'):
+                    if not line[2].get('debit') and line[2].get('debit') != 0.0:
                         error_messages.append(
                             "Invalid field 'debit' in the move line")
-                    if not line[2].get('credit'):
+                    if not line[2].get('credit') and line[2].get('credit') != 0.0:
                         error_messages.append(
                             "Invalid field 'credit' in the move line")
+
         return error_messages
