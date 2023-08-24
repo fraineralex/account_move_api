@@ -1,5 +1,6 @@
 from odoo import models, api
 
+
 class AccountMove(models.Model):
     _inherit = 'account.move'
 
@@ -48,11 +49,14 @@ class AccountMove(models.Model):
                     [('name', '=', line_dict['currency_id'])], limit=1)
                 if line_currency:
                     line_dict['currency_id'] = line_currency.id
-                else: # if currency not found, set it to company currency
-                    line_dict['currency_id'] = company.currency_id.id                                           
+                else:  # if currency not found, set it to company currency
+                    line_dict['currency_id'] = company.currency_id.id
 
                 account = self.env['account.account'].search(
-                    [('name', '=', line_dict['account_id']), ('company_id', '=', company.id)], limit=1)
+                    [('company_id', '=', company.id), '|', ('name', '=',
+                                                            line_dict['account_id']), ('code', '=', line_dict['account_id'])],
+                    limit=1)
+
                 if account:
                     line_dict['account_id'] = account.id
                 else:
