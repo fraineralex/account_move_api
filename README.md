@@ -8,7 +8,7 @@ This module provides an API for creating accounting entries in the account.move 
 
 ### Headers:
 ```bash
-  Authorization: Basic base64(username:password)
+  Authorization: Basic base64(username: email, password: token)
   Content-Type: application/json
 ```
 
@@ -21,21 +21,20 @@ This module provides an API for creating accounting entries in the account.move 
         {
           "date": "2023-08-24",
           "ref": "Asiento desde postman",
-          "journal_id": "Facturas de cliente",
+          "journal_id": "Operaciones varias",
           "currency_id": "DOP",
-          "company_id": "RIBO (Venezuela)",
+          "company_id": "RIBOCAP SAS (Rep. Dom.)",
           "line_ids": [
             [
               0,
-              "virtual_843",
+              0,
               {
-                "account_id": "CUENTA DE PRUEBA RIBO VENEZUELA",
+                "account_id": "CUENTA DE PRUEBA PARA LA API",
                 "partner_id": "Frainer Encarnacion",
                 "currency_id": "DOP",
                 "amount_currency": 0.0,
                 "debit": 0.0,
-                "credit": 0.0,
-                "quantity": 1
+                "credit": 0.0
               }
             ]
           ]
