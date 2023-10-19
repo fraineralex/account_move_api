@@ -44,6 +44,7 @@ This module provides an API for creating accounting entries in the account.move 
   }
 ```
 ### Prerequisites
+- Odoo 14 ot heigher
 - Install the Open API module in your Odoo instance.
 - Enable the account.move module.
 - Add your user to the allowed users.
