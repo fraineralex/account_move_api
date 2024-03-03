@@ -43,8 +43,18 @@ This module provides an API for creating accounting entries in the account.move 
     ]
   }
 ```
+## :rocket: Main Technologies ##
+
+<a href="https://python.org">
+  <img width="50" title="Python" alt="Python Logo" src="https://raw.githubusercontent.com/devicons/devicon/master/icons/python/python-original.svg">
+</a> &#xa0; &#xa0;
+
+<a href="https://odoo.com">
+  <img width="100" title="Odoo" alt="Odoo Logo" src="https://github.com/odoo/odoo/blob/17.0/addons/web/static/img/logo.png">
+</a> &#xa0; &#xa0;
+
 ### Prerequisites
 - Odoo 14 ot heigher
-- Install the Open API module in your Odoo instance.
+- Install the [Open API module](https://apps.odoo.com/apps/modules/14.0/openapi) in your Odoo instance.
 - Enable the account.move module.
 - Add your user to the allowed users.
